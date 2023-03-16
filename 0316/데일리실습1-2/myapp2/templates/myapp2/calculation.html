@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>연산할 두 숫자를 입력하세요</h1>
+  <h2>
+    <form action="{% url 'myapp2:result' %}" method="GET">
+      {% csrf_token %}
+      <label for="">첫번째 숫자 : </label>
+      <input type="number" name="num1" id="num1">
+      <label for="">두번째 숫자 : </label>
+      <input type="number" name="num2" id="num2">
+      <input type="submit" value="계산!">
+
+    </form>
+  </h2>
+{% endblock content %}
+
