@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>{{article.pk}}번째 글</h1>
+    
+    <p>글 제목 : {{article.title}} </p>
+    <p>글 내용 : {{article.content}}</p>
+    <p>생성날짜 : {{article.created_at}}</p>
+    <p>수정날짜 : {{article.updated_at}}</p>
+  
+  <a href="{% url 'articles:index' %}">Home</a>
+
+
+{% endblock content %}

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>게시판 목록</h1>
+  {% for article in articles%}
+    <a href="{% url 'articles:detail' article.pk %}">
+    <p>글 제목 : {{article.title}}</p>
+    </a>
+    <p>글 내용 : {{article.content|truncatechars:10}}</p>
+    <a href="{% url 'articles:update' article.pk %}">
+      <button>수정하기</button>
+    </a>
+    <form action="{% url 'articles:detail' article.pk %}" method="POST">
+      {% csrf_token %}
+      <input type="submit" value="삭제하기">
+    </form>
+    <hr>
+  
+    {% comment %} truncatechars 10자 넘어가면 ...으로바꿔라 {% endcomment %}
+
+  {% empty %}
+    <p>게시글이 하나도 없습니다.</p>
+
+  
+  {% endfor %}
+{% endblock content %}
