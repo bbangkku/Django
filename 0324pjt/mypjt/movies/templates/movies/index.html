@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+  <h1>INDEX</h1>
+  <a href="{% url 'movies:create' %}">Create</a>
+  <hr>
+
+  {% for movie in movies  %}
+    <p>
+      [{{movie.pk}}]<a href="{% url 'movies:detail' movie.pk %}">
+      영화제목 : {{ movie.title }}</a>
+    </p>
+    <h1>평점 : {{ movie.score }}</h1>
+    <hr>
+  {% endfor %}
+{% endblock content %}
