@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{{ person.username }} 님의 프로필페이지 </h1>
+    <div>
+        팔로잉 : {{person.following.count}} | 팔로워 : {{person.followers.count}}
+    </div>
+    <form action="{% url 'accounts:follow' person.pk %}" method="POST">
+        {% csrf_token %}
+        {% if request.user in person.followers.all %}
+            <button type="submit" class="btn btn-danger">언팔</button>
+        {% else %}
+            <button type="submit" class="btn btn-success">팔로우</button>
+
+        {% endif %}
+    </form>
+    <div>
+
+        회원번호:{{person.id}}
+        <br>
+        유저이름:{{person.username}}
+        <br>
+        가입날짜:{{person.date_joined}}
+        
+        <hr>
+        <div> 유저가 쓴 글
+            <br>
+            <br>
+            {% for board in person.board_set.all  %}
+                title : {{board.title}}
+                <br>
+                content : {{board.content}}
+                <br>
+                <a href="{% url 'boards:detail' board.pk %}">자세히보기</a>
+            <br>
+            <br>
+            {% endfor %}
+        </div>
+        <br>
+        <hr>
+        <div> 유저가 쓴 댓글
+            <br>
+            <br>
+            {% for comment in person.authors.all  %}
+                {{comment.content}}
+ 
+                <a href="{% url 'boards:detail' comment.comments.pk %}">자세히보기</a>
+                <br>
+
+            {% endfor %}
+
+        </div>
+        <hr>
+        <div> 팔로워
+
+        </div>
+    </div>
+
+
+{% endblock content %}
