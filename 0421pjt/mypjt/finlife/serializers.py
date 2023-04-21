@@ -5,7 +5,7 @@ class DepositOptionsSerializer(serializers.ModelSerializer):
     class Meta:
         model = DepositOptions
         fields = '__all__'
-        read_only_field=('fin_prdt_cd')
+        read_only_fields=('fin_prdt_cd',)
 
 class DepositProductsSerializer(serializers.ModelSerializer):
     class Meta:

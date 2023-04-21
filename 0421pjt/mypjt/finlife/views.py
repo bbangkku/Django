@@ -37,12 +37,7 @@ def save_deposit_products(request):
     }
     response = requests.get(URL, params=params).json()
 
-    for item in response['result']['baseList']:
-        serializer = DepositProductsSerializer(data=item)
-        if serializer.is_valid(raise_exception=True):
-            serializer.save()
-
-    # for item in response['result']['optionList']:
+    # for item in response['result']['baseList']:
     #     serializer = DepositProductsSerializer(data=item)
     #     if serializer.is_valid(raise_exception=True):
     #         serializer.save()
@@ -91,5 +86,14 @@ def deposit_product_options(request,fin_prdt_cd):
 
 def top_rate(request):
     top_option = DepositOptions.objects.aggregate(top_rate=Max('intr_rate2'))
-    print(top_option)
+    option = DepositOptions.objects.get(intr_rate2=top_option['top_rate'])
+    product = DepositProducts.objects.get(id=option.fin_prdt_cd_id)
+    serializer_p = DepositOptionsSerializer(product)
 
+    options = product.options.all()
+    serializer_o = DepositOptionsSerializer(options,many=True)
+    return Response({
+        'doposit_product' : serializer_p.data,
+        'options' : serializer_o.data,
+    })
+    
