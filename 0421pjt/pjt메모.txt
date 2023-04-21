@@ -1,0 +1,5 @@
+serializers를 왜 쓰는지, 개념 > json 관련
+model 생성할때 외래키에 대한 내용
+api를 가져와서 불러오는것까지,,
+raise_exception=True에 대한 개념
+
