@@ -5,7 +5,7 @@ from django.http import JsonResponse
 from rest_framework.response import Response
 import pprint
 from rest_framework.decorators import api_view
-from django.db.models import Q,Max
+from django.db.models import Max
 # Create your views here.
 
 from rest_framework import status
@@ -87,13 +87,18 @@ def deposit_product_options(request,fin_prdt_cd):
 def top_rate(request):
     top_option = DepositOptions.objects.aggregate(top_rate=Max('intr_rate2'))
     option = DepositOptions.objects.get(intr_rate2=top_option['top_rate'])
-    product = DepositProducts.objects.get(id=option.fin_prdt_cd_id)
+    option2 = DepositOptionsSerializer(option)
+    print(option)
+    product = DepositProducts.objects.get(id = option2.data['fin_prdt_cd'])
+    print(product)
     serializer_p = DepositOptionsSerializer(product)
+    print(serializer_p)
 
     options = product.options.all()
+    print(options)
     serializer_o = DepositOptionsSerializer(options,many=True)
     return Response({
-        'doposit_product' : serializer_p.data,
+        'deposit_product' : serializer_p.data,
         'options' : serializer_o.data,
     })
     
