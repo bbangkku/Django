@@ -83,17 +83,15 @@ def deposit_product_options(request,fin_prdt_cd):
     return Response(serializers.data)
 
 
-
+@api_view(['GET'])
 def top_rate(request):
     top_option = DepositOptions.objects.aggregate(top_rate=Max('intr_rate2'))
     option = DepositOptions.objects.get(intr_rate2=top_option['top_rate'])
-    option2 = DepositOptionsSerializer(option)
     print(option)
-    product = DepositProducts.objects.get(id = option2.data['fin_prdt_cd'])
+    product = DepositProducts.objects.get(id = option.fin_prdt_cd_id)
     print(product)
-    serializer_p = DepositOptionsSerializer(product)
+    serializer_p = DepositProductsSerializer(product)
     print(serializer_p)
-
     options = product.options.all()
     print(options)
     serializer_o = DepositOptionsSerializer(options,many=True)
